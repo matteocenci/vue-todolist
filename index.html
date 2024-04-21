@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toboolist</title>
     <link rel="stylesheet" href="css/style.css" />
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
   </head>
   <body>
     <header>
@@ -14,26 +14,17 @@
       <span id="logo-text">Toboolist</span>
     </header>
     <main>
-      <div class="container">
+      <div class="container" id="app">
         <div class="top">
-          <input type="text" placeholder="es: Fare la spesa..." />
-          <button type="button" class="btn btn-filled">Add Task</button>
+          <input v-model="newToDo" @keyup.enter="addTodo" type="text" placeholder="es: Fare la spesa..." />
+          <button @click="addTodo" class="btn btn-filled">Add Task</button>
         </div>
         <div class="tasks">
               <ul class="inner-list">
-                <li class="done">
-                  <span class="circle checked"></span>Recruiting blog post
-                </li>
-                <li class="done">
-                  <span class="circle checked"></span>Mobile app luaunch
-                </li>
-                <li>
-                  <span class="circle delete"></span>Interview John H.
-                </li>
-                <li class="done">
-                  <span class="circle checked"></span>Summit update to mobile
-                  storefronts 
-                </li>
+                <li v-for="(todo, index) in todos" :key="index" :class="{ done: todo.done }">
+                  <span class="circle" @click="toggleTodo(index)"></span>{{ todo.text }}
+                  <span class="circle delete" @click="removeTodo(index)"></span>
+              </li>
               </ul>
             </li>
           </ul>
@@ -41,6 +32,7 @@
       </div>
     </main>
 
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>
